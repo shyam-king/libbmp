@@ -34,6 +34,7 @@ class Bitmap {
 	~Bitmap();
 
 	void draw(int x, int y);
+	void obtainColors();
 };
 
 #endif

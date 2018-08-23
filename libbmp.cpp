@@ -43,6 +43,24 @@ void Bitmap::draw(int x, int y)
 	}
 }
 
+void Bitmap::obtainColors()
+{
+	palettetype pal;
+	getpalette(&pal);
+	bmpfile.seekg(sizeof(header) + sizeof(dib));
+
+	ofstream file("dump.txt");
+
+	for (int i = 0; i < pal.size; i++)
+	{
+		unsigned char colorData[4];
+		bmpfile.read(colorData, sizeof(colorData));
+		setrgbpalette(pal.colors[i], colorData[2], colorData[1], colorData[0]);
+		//setrgbpalette(pal.colors[i], 0,0,0);
+	}
+	file.close();
+}
+
 
 int main()
 {
@@ -51,6 +69,7 @@ int main()
 
 	int gd = DETECT, gm;
 	initgraph(&gd, &gm, "..\\BGI");
+	bmp->obtainColors();
 	bmp->draw(0,0);
 
 
